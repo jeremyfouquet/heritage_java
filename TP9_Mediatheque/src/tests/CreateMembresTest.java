@@ -1,21 +1,35 @@
-
-
 package tests;
 
+import java.util.Scanner;
+
 import junit.framework.TestCase;
+import mediatheque.Mediatheque;
 
 public class CreateMembresTest extends TestCase {
+	private Mediatheque mediatheque;
+
     public CreateMembresTest(String testMethodName) {
         super(testMethodName);
     }
-    // Convention nom methode test suivi du nom voulu
-    public void testCreateMembresTest() throws Exception {
-		System.out.printf("%s", "Test de la méthode CloturerCompte (Cas normal)");
-//		createMembres();
-//		boolean condition = document.mediatheque.size().equals(2);
-//		Client.cloturerCompte(id);
-//        assertEquals(size-1, Client.mesComptes.size());		
-//        System.out.printf("Attendu  : %d => Resultat : %d \n", size-1, Client.mesComptes.size());
-//        Client.mesComptes = new ArrayList<>();
+    
+    protected void setUp() throws Exception {
+        super.setUp();
+		mediatheque = new Mediatheque(new Scanner(System.in));
     }
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
+    
+    public void testCreateMembres() throws Exception {
+		System.out.printf("%s\n", "CreateMembres");
+		System.out.printf("%s\n", "Cas normal");
+        int avantCreation = Mediatheque.membres.size();
+		mediatheque.createMembres();
+        int apresCreation = Mediatheque.membres.size();
+		System.out.printf("Avant appel de la methode Mediatheque.membres.size() : %s\n", avantCreation);
+		System.out.printf("Apres appel de la methode Mediatheque.membres.size() : %s\n", apresCreation);
+        assertEquals(true, avantCreation < apresCreation);
+		System.out.println();
+    }
+ 
 }

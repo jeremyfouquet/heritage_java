@@ -6,8 +6,6 @@ public enum Categorie {
 	Manga("Manga"),
 	Journal("Journal"),
 	Nouvelle("Nouvelle");
-	
-
 
 	public String categorie = "";
 	

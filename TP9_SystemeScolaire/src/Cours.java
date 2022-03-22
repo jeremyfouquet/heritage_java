@@ -1,10 +1,6 @@
 import java.util.Objects;
 
 /**
- * 
- */
-
-/**
  * @author Jeremy Fouquet
  *
  */

@@ -19,31 +19,39 @@ public interface Personne {
 	public static List<Personne> listPersonne = new ArrayList<Personne>();
 
 	/**
-	 * Ecrit en console le nom, le prenom ainsi que l'id du professeur
+	 * Affiche les attributs Identifiant, Nom et Prenom
 	 */
 	public default void presenter() {
-		System.out.printf("Presentation du professeur id : %s \n",  this.getIdentifiant());
+		System.out.printf("Identifiant : %s \n",  this.getIdentifiant());
 		System.out.printf("Nom : %s \n", this.getNom());
 		System.out.printf("Prenom : %s \n", this.getPrenom());
 	}
 
 	/**
-	 * Ecrit en console le detail de chaque cours présent dans la liste de mesCours de Personne (Etudiant/Professeur)
+	 * @return List<Cours> Liste des cours suivi (si Etudiant) ou Liste des cours donné (si Professeur)
+	 * 
+	 * Affiche le detail de chacun des cours présent dans la variable mesCours
 	 */
 	public default List<Cours> voirCours() {
 		String typeCours = this.getClass().getName() == "Etudiant"? "inscrit" : "propose";
-		System.out.printf("Voici la liste des cours %s : \n", typeCours);
 		for (Cours a : this.getCours()) {
-			System.out.printf("Cours : %s, lieu : %s, horaire : %s, duree : %d min, coeff: %d, type : %s \n", a.getTheme(), a.getLieu(), a.getHoraire(), a.getDuree(), a.getCoefficient(), a.getType());
+			System.out.printf("Cours %s : %s\n", typeCours, a.getTheme());
+			System.out.printf("Lieu : %s\n", a.getLieu());
+			System.out.printf("Horaire : %s\n", a.getHoraire());
+			System.out.printf("Duree : %d min\n", a.getDuree());
+			System.out.printf("coeff: %d\n", a.getCoefficient());
+			System.out.printf("type : %s\n", a.getType());
+			System.out.println("---------");
 		}
 		return this.getCours();
 	};
 
 	/**
-	 * @param cours
-	 * @return
+	 * @param cours Le Cours recherché
+	 * @param mesCours La liste dans laquel on recherche le Cours
+	 * @return int L'index du Cours recherché ou -1 si aucun cours trouvé
 	 * 
-	 * Retourne l'index du cours passé en paramettre
+	 * Cherche un Cours dans une liste de Cours et retourne son Index dans cette liste Sinon retourne -1
 	 */
 	public default int indexCours(Cours cours, List<Cours> mesCours) {
 		int index = -1;
@@ -56,12 +64,13 @@ public interface Personne {
 		return index;
 	};
 
+
 	/**
-	 * @param cours
-	 * @return
+	 * @param cours Le Cours recherché
+	 * @param mesCours La liste dans laquel on recherche le Cours
+	 * @return boolean true si Cours existe déjà sinon false
 	 * 
-	 * Verifie si le cours passé en 1er paramettre est déjà présent dans mesCours passé en 2eme paramettre
-	 * Si oui alors retourne TRUE sinon FALSE
+	 * Verifie si un Cours existe déjà dans une liste de Cours
 	 */
 	public default boolean deja(Cours cours, List<Cours> mesCours) {
 		boolean deja = false;
@@ -75,39 +84,18 @@ public interface Personne {
 
 //	GETTERS AND SETTERS
 
-	/**
-	 * @return
-	 */
 	public String getIdentifiant();
 
-	/**
-	 * @param identifiant
-	 */
 	public void setIdentifiant(String identifiant);
 
-	/**
-	 * @return
-	 */
 	public String getNom();
 
-	/**
-	 * @param nom
-	 */
 	public void setNom(String nom);
 
-	/**
-	 * @return
-	 */
 	public String getPrenom();
 
-	/**
-	 * @param prenom
-	 */
 	public void setPrenom(String prenom);
 
-	/**
-	 * @return
-	 */
 	public List<Cours> getCours();
 	
 }

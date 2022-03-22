@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Notes {
 	private Cours cours;
-	private List<Double> notes = new ArrayList<Double>();;
+	private List<Double> notes = new ArrayList<Double>(); // liste de notes associé à l'attribut cours
 
 	/**
 	 * @param cours

@@ -7,14 +7,16 @@ public abstract class Document {
 	private String identifiant;
 	private String nom;
 	private String titre;
-	private boolean restriction;
-	private LocalDate dateRetour;
-	private int nbJourRetour;
+	private boolean restriction; // si true emprunt non autorisé sinon emprunt auorisé
+	private LocalDate dateRetour; // date de retour à null si non emprunté et affecté lors de l'emprunt du document (date du jour de l'emprunt + nbJourRetour) 
+	private int nbJourRetour; // nombre de jours dont le document peut être emprunté
 
 	/**
 	 * @param nom
 	 * @param titre
 	 * @param restriction
+	 * 
+	 * Constructeur
 	 */
 	public Document(String nom, String titre, boolean restriction) {
 		this.nom = nom;
@@ -22,6 +24,12 @@ public abstract class Document {
 		this.restriction = restriction;
 	}
 
+	/** 
+	 * Affiche le detail de Document
+	 * Identifiant, Type de Classe, Nom, Titre, Restriction(OUI/NON), Date de retour (Si emprunt uniquement)
+	 * 
+	 * @author	Jeremy Fouquet
+	 */
 	public void voirDetail() {
 		System.out.printf("Identifiant : %s\n", identifiant);
 		System.out.printf("Document : %s\n", getClass().getSimpleName());
@@ -32,13 +40,25 @@ public abstract class Document {
 			System.out.printf("Déjà emprunté, retour prévu avant le : %s\n", dateRetour);
 		};
 	}
-	
+
+	/** 
+	 * Calcule la date de retour : date du jour + nbJourRetour
+	 * 
+	 * @return LocalDate date de retour maximum autorisé
+	 * @author	Jeremy Fouquet
+	 */
 	public LocalDate retour() {
         LocalDate dateEmprunt = LocalDate.now();
         LocalDate retour = dateEmprunt.plusDays(nbJourRetour);
         return retour;
 	}
-	
+
+	/** 
+	 * Verifie si la dateRetour est depassé et donc si le document est en retard de rendu
+	 * 
+	 * @return boolean si en retard renvoi true sinon false
+	 * @author	Jeremy Fouquet
+	 */
 	public boolean estEnRetard() {
         LocalDate now = LocalDate.now();
         boolean estEnRetard = now.isAfter(dateRetour);

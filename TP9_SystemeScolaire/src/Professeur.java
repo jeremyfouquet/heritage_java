@@ -9,8 +9,8 @@ public class Professeur implements Personne {
 	
 	private String Nom;
 	private String prenom;
-	private String identifiant;
-	private List<Cours> mesCours = new ArrayList<Cours>();
+	private String identifiant; // identifiant unique à chaque Personne et permattant de l'identifié
+	private List<Cours> mesCours = new ArrayList<Cours>(); // Liste de cours donné
 	
 	
 	/**
@@ -71,9 +71,9 @@ public class Professeur implements Personne {
 	
 	
 	/**
-	 * @param cours
+	 * @param cours Cours à ajouter
 	 * 
-	 * Si le cours passé en paramettre n'est pas encore dans mesCours alors il est ajouté à la liste
+	 * Ajout un cours à mesCours (Si le cours n'existe pas déjà dans la liste)
 	 */
 	protected void ajouterCours(Cours cours) {	
 		if (!deja(cours, mesCours)) {
@@ -82,11 +82,10 @@ public class Professeur implements Personne {
 	};
 
 	/**
-	 * @param cours
-	 * @param coursModified
+	 * @param cours Cours avant modification
+	 * @param coursModified Cours apres modification
 	 * 
-	 * Si le cours passé en 1er paramettre est bien présent dans mesCours alors il est
-	 * remplacé par le cours passé en 2eme paramettre
+	 * Verifie que cours est present dans mesCours, puis remplace celui ci par coursModified
 	 */
 	protected void modifierCours(Cours cours, Cours coursModified) {
 		if (deja(cours, mesCours)) {
@@ -95,10 +94,9 @@ public class Professeur implements Personne {
 	};
 	
 	/**
-	 * @param cours
+	 * @param cours Cours à modifier
 	 * 
-	 * Si le cours passé en paramettre est bien présent dans mesCours alors il est supprimé
- 	 * de la liste
+	 * Verifie que cours est present dans mesCours, puis si c'est le ca le supprime de la liste
 	 */
 	protected void supprimerCours(Cours cours) {
 		if (deja(cours, mesCours)) {
@@ -107,11 +105,10 @@ public class Professeur implements Personne {
 	};
 	
 	/**
-	 * @param cours
+	 * @param cours Cours dont on recherche les Etudiants qui y sont inscrit
+	 * @return List<Etudiant> La liste de tous les etudiants inscrit au cours passé en paramettre sinon une liste vide
 	 * 
-	 * On créé une nouvelle liste vide
-	 * Puis pour chaque etudiant inscrit au cours passé en paramettre on l'ajoute à cette liste
-	 * Si la liste contient au moins 1 etudiant on affiche chacun d'eu grace à la methode presenter
+	 * Verifie dans la liste de tout les etudiants tous ceux inscrit au cours passé en paramettre et affiche leur information s'il y en a
 	 */
 	protected List<Etudiant> voirEtudiants(Cours cours) {
 		List<Etudiant> etudiantsInscrit = new ArrayList<Etudiant>();
@@ -127,10 +124,10 @@ public class Professeur implements Personne {
 			}
 		}
 		if(etudiantsInscrit.size() > 0) {
-			System.out.printf("Voici la liste des etudiant inscrit au cours %s de %s : \n", cours.getTheme(), cours.getHoraire());
+			System.out.printf("Voici la liste des etudiants inscrits au cours %s de %s : \n", cours.getTheme(), cours.getHoraire());
 			for (Etudiant etudiant : etudiantsInscrit) {
-				System.out.println(etudiant.toString());
 				etudiant.presenter();
+				System.out.println("--------");
 			}
 		}
 		return etudiantsInscrit;
@@ -138,13 +135,11 @@ public class Professeur implements Personne {
 	};
 	
 	/**
-	 * @param etudiant
-	 * @param cours
-	 * @param note
+	 * @param etudiant à noter
+	 * @param cours à noter
+	 * @param note à ajouter
 	 * 
-	 * 
-	 * Si l'étudiant passé en 1er paramettre est inscrite au cours passé en 2eme paramettre
-	 * on lui ajoute à ce cours la note passé en 3eme paramettre
+	 * Ajoute une note au cours d'un etudiant (si celui ci y est inscrit uniquement)
 	 */
 	protected void noter(Etudiant etudiant, Cours cours, double note) {
 		for (Notes n : etudiant.getNotes()) {

@@ -11,13 +11,15 @@ public class Membre {
 	private String identifiant;
 	private String nom;
 	private TypeMembre typeMembre;
-	private final int maxEmprunt = 3;
-	private List<Document> emprunt = new ArrayList<Document>(maxEmprunt);
+	private final int maxEmprunt = 3; // nombre max d'emprunt accepté, restreint la longueur de la liste emprunt à ce chiffre
+	private List<Document> emprunt = new ArrayList<Document>(maxEmprunt); // liste d'emprunt
 
 	/**
 	 * @param identifiant
 	 * @param nom
 	 * @param typeMembre
+	 * 
+	 * Constructeur
 	 */
 	public Membre(String identifiant, String nom, TypeMembre typeMembre) {
 		this.identifiant = identifiant;
@@ -25,6 +27,12 @@ public class Membre {
 		this.typeMembre = typeMembre;
 	}
 	
+	/** 
+	 * Affiche le detail de tous les documents de la mediatheque
+	 * 
+	 * @see Document#voirDetail()
+	 * @author	Jeremy Fouquet
+	 */
 	public void consulterDocumentDisponible() {
 		System.out.printf("\n%s\n", "Voici la liste des medias :");
 		System.out.println();
@@ -34,6 +42,12 @@ public class Membre {
 		}
 	}
 	
+	/** 
+	 * Affiche le detail de Membre
+	 * Identifiant, Nom et TypeMembre
+	 * 
+	 * @author	Jeremy Fouquet
+	 */
 	public void voirDetail() {		
 		System.out.println();
 		System.out.printf("Identifiant : %s\n", identifiant);
@@ -41,6 +55,13 @@ public class Membre {
 		System.out.printf("Type de membre : %s\n", typeMembre);
 	}
 	
+	/** 
+	 * Affiche le detail de tous les documents de la liste d'emprunt
+	 * Si la liste d'emprunt est vide alors affiche un message special
+	 * 
+	 * @see Document#voirDetail()
+	 * @author	Jeremy Fouquet
+	 */
 	public void consulterDocumentEmprunte() {
 		if (emprunt.size() > 0) {
 			System.out.printf("\n%s\n", "Voici la liste des medias empruntés :");
@@ -53,6 +74,23 @@ public class Membre {
 		}
 	}
 
+	/** 
+	 * Tant que la liste d'emprunt n'est pas vide propose au membre de rendre un document emprunté
+	 * 
+	 * @param mediatheque liste de tous les documents de la mediatheque
+	 * 
+	 * @see Document#getIdentifiant()
+	 * @see Mediatheque#selection(List, String)
+	 * @see Mediatheque#getDocumentById(String)
+	 * @see #getIndexEmpruntById(String)
+	 * @see Document#getIdentifiant()
+	 * @see Document#setDateRetour(java.time.LocalDate)
+	 * 
+	 * @exception IndexOutOfBoundsException L'identifiant du document n'existe pas dans la liste des mediatheque
+	 * @exception MonException La liste mediatheque est vide
+	 *
+	 * @author	Jeremy Fouquet
+	 */
 	public void rendreDocument(Mediatheque mediatheque) {
 		String choix = "";
 		String retour = Choix.RETOUR.choix;
@@ -75,7 +113,7 @@ public class Membre {
 					if(null != emprunt) {
 						int index = -1;								
 						try {
-							index = getIndexDocumentById(emprunt.getIdentifiant());					
+							index = getIndexEmpruntById(emprunt.getIdentifiant());					
 						} catch (IndexOutOfBoundsException e) {
 							System.out.printf("\n%s %s\n", "OUPS ERREUR : ", "Cette identifiant de document n'existe pas dans la emprunt");
 						} catch (MonException e) {
@@ -89,7 +127,24 @@ public class Membre {
 			}
 		}
 	}
-	
+
+	/** 
+	 * Propose de rendre l'un des documents en retard de la liste des emprunt
+	 * 
+	 * @param mediatheque liste de tous les documents de la mediatheque
+	 * @param emprunt liste des emprunt
+	 * 
+	 * @see Document#estEnRetard()
+	 * @see Mediatheque#selection(List, String)
+	 * @see #getEmpruntById(String)
+	 * @see Document#getIdentifiant()
+	 * @see Document#setDateRetour(java.time.LocalDate)
+	 * 
+	 * @exception IndexOutOfBoundsException L'identifiant du document n'existe pas dans la liste des emprunt
+	 * @exception MonException La liste emprunt est vide
+	 *
+	 * @author	Jeremy Fouquet
+	 */
 	public void rendreRetard(Mediatheque mediatheque, Document emprunt) {
 		String choix = "";
 		int nbRetard = 0;
@@ -101,18 +156,38 @@ public class Membre {
 		if (!choix.equals(Choix.non.choix)) {
 			int index = -1;								
 			try {
-				index = getIndexDocumentById(emprunt.getIdentifiant());					
+				index = getIndexEmpruntById(emprunt.getIdentifiant());					
 			} catch (IndexOutOfBoundsException e) {
-				System.out.printf("\n%s %s\n", "OUPS ERREUR : ", "Cette identifiant de document n'existe pas dans la emprunt");
+				System.out.printf("\n%s %s\n", "OUPS ERREUR : ", "Cette identifiant de document n'existe pas dans la liste emprunt");
 			} catch (MonException e) {
 				System.out.printf("\n%s %s\n", "OUPS ERREUR : ", e.getMessage());
 			} finally {
-				emprunt.setDateRetour(null);
-				this.emprunt.remove(index);
+				if(index >= 0) {
+					emprunt.setDateRetour(null);
+					this.emprunt.remove(index);
+				}
 			}
 		}	
 	}
 	
+	/** 
+	 * Tant que la liste des emprunts n'a pas attent sa taille max, propose d'emprunter un document
+	 * Si la liste des emprunt est pleine alors affiche un message speciale et appel de la methoque rendreDocument
+	 * 
+	 * @param mediatheque liste de tous les documents de la mediatheque
+	 * 
+	 * @see Mediatheque#documentEmpruntable()
+	 * @see Document#getIdentifiant()
+	 * @see Mediatheque#selection(List, String)
+	 * @see Mediatheque#getDocumentById(String)
+	 * @see Document#setDateRetour(java.time.LocalDate)
+	 * @see #rendreDocument(Mediatheque)
+	 * 
+	 * @exception IndexOutOfBoundsException L'identifiant du document n'existe pas dans la liste mediatheque
+	 * @exception MonException La liste mediatheque est vide
+	 *
+	 * @author	Jeremy Fouquet
+	 */
 	public void emprunterDocument(Mediatheque mediatheque) {
 		String choix = "";
 		String retour = Choix.RETOUR.choix;
@@ -148,7 +223,15 @@ public class Membre {
 		}
 			
 	}
-	
+
+	/** 
+	 * Retourne le premier document en retard trouvé parmis la liste des emprunts ou null sinon
+	 * 
+	 * @return Document Le plus ancien document emprunté en retard
+	 * @see Document#estEnRetard()
+	 *
+	 * @author	Jeremy Fouquet
+	 */
 	public Document retard() {
 		Document retard = null;
 		for (Document doc : emprunt) {
@@ -158,7 +241,19 @@ public class Membre {
 		}
 		return retard;
 	}
-	public int getIndexDocumentById(String id) throws MonException {
+
+	/** 
+	 * Trouve l'index du Document avec l'attribut identifiant == id dans la liste emprunt
+	 * 
+	 * @return index du Document dont son attribut identifiant == id
+	 * @param id Identifiant du Document recherché
+	 *
+	 * @throws MonException La liste emprunt est vide
+	 * @throws MonException Impossible de trouver le document dans la liste
+	 * 
+	 * @author	Jeremy Fouquet
+	 */
+	public int getIndexEmpruntById(String id) throws MonException {
 		int index = -1;
 		int i = 0;
 		for (Document doc : this.emprunt) {
@@ -169,11 +264,26 @@ public class Membre {
 		}
 		if (this.emprunt.size() <= 0) {
 			throw new MonException("La liste emprunt est vide");
+		} else if (index == -1) {
+			throw new MonException("Impossible de trouver le document dans la liste");
+		} else {
 		}
 		return index;
 	}
 	
-	public void ajouterDocument(Mediatheque mediatheque) {
+	/** 
+	 * Demande au membre de renseigné tous les champs nécéssaire au nouveau document au travers un scanner avant de créé et d'ajouter ce dernier dans la médiatheque
+	 * 
+	 * @param mediatheque liste de tous les documents de la mediatheque
+	 * 
+	 * @see Mediatheque#question(String)
+	 * @see Mediatheque#selection(List, String)
+	 * 
+	 * @throws MonException Seul le membre du personnel est autorisé à faire ça !
+	 *
+	 * @author	Jeremy Fouquet
+	 */
+	public void ajouterDocument(Mediatheque mediatheque) throws MonException {
 		if(this.typeMembre.equals(TypeMembre.Personnel)) {
 			Document ajout = null;
 			String choix = "";
@@ -222,17 +332,32 @@ public class Membre {
 				}
 			}
 		} else {
-			System.out.printf("\n%s\n", "Vous n'etes pas authorisé à faire ça !");
+			throw new MonException("Seul le membre du personnel est autorisé à faire ça !");
 		}
 	}
-	
-	public void documentARenover(Mediatheque mediatheque) {
+
+	/** 
+	 * Tant qu'il y a des documents dans la liste des document à emprunté, propose au membre de sortir l'un des document de cette liste vers les document à rénover
+	 * 
+	 * @param mediatheque liste de tous les documents de la mediatheque
+	 * 
+	 * @see Mediatheque#documentEmpruntable()
+	 * @see Document#getIdentifiant()
+	 * @see Mediatheque#selection(List, String)
+	 * @see Mediatheque#getDocumentById(String)
+	 * @see Mediatheque#getIndexMediathequeById(String)
+	 * 
+	 * @throws MonException Seul le membre du personnel est autorisé à faire ça !
+	 *
+	 * @author	Jeremy Fouquet
+	 */
+	public void documentARenover(Mediatheque mediatheque) throws MonException {
 		if(this.typeMembre.equals(TypeMembre.Personnel)) {
 			String choix = "";
-			List<Document> documents = mediatheque.documentEmpruntable();
+			List<Document> documents = mediatheque.documentPresent();
 			while(documents.size() > 0 && !choix.equals(Choix.RETOUR.choix)) {
 				List<String> liste = new ArrayList<>();
-				for (Document document : mediatheque.documentEmpruntable()) {
+				for (Document document : documents) {
 					liste.add(document.getIdentifiant());
 				}
 				liste.add(Choix.RETOUR.choix);
@@ -249,7 +374,7 @@ public class Membre {
 						if(null != renove) {
 							int index = -1;								
 							try {
-								index = mediatheque.getIndexMediathequeById(renove.getIdentifiant());			
+								index = mediatheque.getIndexMediathequeById(renove.getIdentifiant());	
 							} catch (IndexOutOfBoundsException e) {
 								System.out.printf("\n%s %s\n", "OUPS ERREUR : ", "Cette identifiant de document n'existe pas dans la mediatheque");
 							} catch (MonException e) {
@@ -257,13 +382,14 @@ public class Membre {
 							} finally {
 								Mediatheque.renovation.add(renove);
 								Mediatheque.mediatheque.remove(index);
+								documents = mediatheque.documentEmpruntable();
 							}
 						}
 					}
 				}
 			}
 		} else {
-			System.out.printf("\n%s\n", "Vous n'etes pas authorisé à faire ça !");
+			throw new MonException("Seul le membre du personnel est autorisé à faire ça !");
 		}
 	}
 

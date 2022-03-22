@@ -9,9 +9,9 @@ public class Etudiant implements Personne {
 	
 	private String Nom;
 	private String prenom;
-	private String identifiant;
-	private List<Cours> mesCours = new ArrayList<Cours>();
-	private List<Notes> notes = new ArrayList<Notes>();
+	private String identifiant; // identifiant unique à chaque Personne et permattant de l'identifié
+	private List<Cours> mesCours = new ArrayList<Cours>(); // liste de cours inscrit
+	private List<Notes> notes = new ArrayList<Notes>(); // liste de notes associés au cours inscrit
 	
 	/**
 	 * @param identifiant
@@ -69,22 +69,17 @@ public class Etudiant implements Personne {
 				+ mesCours + ", notes=" + notes + "]";
 	}
 
-	/**
-	 * @return
-	 * 
-	 * Getter Notes
-	 */
 	public List<Notes> getNotes() {
 		return notes;
 	}
 
+	
+
 	/**
-	 * @param cours
+	 * @param cours Le Cours à ajouté à mesCours
 	 * 
-	 * SI il n'est pa déjà inscrit au cours alors on ajoute le cours passé en paramettre de la fonction
-	 * à la liste des cours inscrit
-	 * ET on ajoute également une nouvelle instance de Notes lié à ce cours
-	 * si ce n'est pas déjà fait
+	 * Ajoute le cours passé en paramettre à mesCours (si pas déjà inscrit)
+	 * Puis créé une nouvelle instance de Note pour l'ajouté à notes (si pa encore existant)
 	 */
 	protected void inscrire(Cours cours) {	
 		if (!deja(cours, mesCours)) {
@@ -97,10 +92,9 @@ public class Etudiant implements Personne {
 	};
 	
 	/**
-	 * @param cours
+	 * @param cours Le Cours à supprimer de mesCours
 	 * 
-	 * SI il est inscrit au cours passé en paramettre on le desinscrit c'est à dire on le supprimme
-	 * de la liste coursInscrit
+	 * Verifi si le Cours existe dans mesours avant de le supprimer de la liste
 	 */
 	protected void desinscrire(Cours cours) {
 		if (deja(cours, mesCours)) {
@@ -109,42 +103,59 @@ public class Etudiant implements Personne {
 	};
 
 	
+
 	/**
-	 * Ecrit en console le nom de chaque cours présent dans le relevé de notes ainsi que les notes associés
-	 * s'il y en a !
+	 * @return List<Notes> Liste de toute les notes de l'etudiant
+	 * 
+	 * Affiche pour chacun des cours ouvert à recevoir une notes : son theme, son horraire et le tableau des notes associés s'il en a sinon precise "aucune note"
 	 */
 	protected List<Notes> voirNotes() {
-		System.out.printf("Voici la liste des notes : \n");
 		for (Notes n : notes) {
-			System.out.printf("Pour le Cours %s de %s, notes : %s \n", n.getCours().getTheme(), n.getCours().getHoraire(), n.getNotes().size()>0 ? n.getNotes() : "aucune note");
+			System.out.printf("Pour le Cours %s de %s :\n", n.getCours().getTheme(), n.getCours().getHoraire());
+			if(n.getNotes().size()>0) {
+				int i = 1;
+				for (double note: n.getNotes()) {
+					System.out.printf("note n°%d : %.1f",i, note);
+					if(n.getNotes().size() != i) {
+						System.out.printf("%s"," ; ");
+					} else {
+						System.out.println();
+					}
+					i++;
+				}
+			} else {
+				System.out.printf("%s\n","Vous n'avez encore aucune note");
+			}
+			System.out.println("---------");
 		}
 		return notes;
 	};
 	
 	/**
-	 * @return
+	 * @return double La moyenne de l'etudiant
 	 * 
-	 * Retourne la moyenne des notes de l'etudiant sinon retourn null si aucun note
+	 * Calcule et ratourne la moyenne de l'etudiant
 	 */
 	protected double moyenne() {
 		double total = 0;
 		int multi = 0;
 		for (Notes n : notes) {
+			int coeff = n.getCours().getCoefficient();
 			for (double m : n.getNotes()) {
-				multi ++;
-				total += m;
+				multi += coeff;
+				total += (m * coeff);
 			}
 		}
 		double moyenne = multi != 0 ? total / multi : null;
 		return moyenne;
 	}
 	
+
 	/**
-	 * @param cours
-	 * @return
+	 * @param cours Le Cours recherche dans notes
+	 * @return boolean true si il existe la possibilité de noté le cours passé en paramettre sinon false
 	 * 
 	 * Verifie si le cours passé en paramettre de la methode est déjà présent dans notes
-	 * Si oui alors retourne TRUE sinon FALSE
 	 */
 	protected boolean dejaNotes(Cours cours) {
 		boolean dejaNotes = false;

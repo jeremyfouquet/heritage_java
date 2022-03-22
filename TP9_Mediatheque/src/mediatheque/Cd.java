@@ -14,6 +14,8 @@ public class Cd extends Document {
 	 * @param restriction
 	 * @param auteur
 	 * @param compositeur
+	 * 
+	 * Constructeur
 	 */
 	public Cd(String nom, String titre, boolean restriction, String auteur, String compositeur) {
 		super(nom, titre, restriction);

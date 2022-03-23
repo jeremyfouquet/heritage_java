@@ -8,23 +8,27 @@ import java.util.List;
 public class Maison {
 	public List<Piece> pieces = new ArrayList<Piece>();
 	/**
+	 * @param generateur si true on ajoute des pieces grace au generateur aleatoire
 	 * 
 	 * CONSTRUCTEUR
 	 */
-	public Maison() {
+	public Maison(boolean generateur) {
 		new Piece(TypePiece.salon, pieces);
 		new Piece(TypePiece.cuisine, pieces);
 		new Piece(TypePiece.salleDeBain, pieces);
 		new Piece(TypePiece.chambre, pieces);
 		new Piece(TypePiece.toilettes, pieces);
+		if(generateur) {
+			generateurMaisonAleatoire();
+		}
 	}
 	
 	/**
-	 * @return
+	 * @return int nombre de pieces total de la maison
 	 * 
-	 * afficher en console la liste des pieces présente dans la maison
-	 * pour chaque piece : son nom, sa dimensions et son visuel (recuperé dupuis la methode afficheGrille)
-	 * Puis retourn le nombre de piece
+	 * Afficher en console la liste des pieces présente dans la maison
+	 * Pour chaque piece : son nom, sa dimensions et son visuel
+	 * @see Piece#afficherGrille()
 	 */
 	protected int afficherPieces() {
 		for (Piece piece : pieces) {
@@ -38,9 +42,9 @@ public class Maison {
 	}
 	
 	/**
-	 * @return
+	 * @return double surface de la maison en m2
 	 * 
-	 * retourne la surface total de la maison
+	 * calcule la surface total de la maison en fonction des pieces quelle contient
 	 */
 	protected double surfaceTotal() {
 		double surfaceTotal = 0;
@@ -48,6 +52,22 @@ public class Maison {
 			surfaceTotal += piece.getSurface();
 		}
 		return surfaceTotal;
+	}
+	
+	/** 
+	 * Genere aleatoirement de 0 à 10 pieces parmis la liste de typePiece connu depuis l'enum
+	 */
+	protected void generateurMaisonAleatoire() {
+		int nbPieces = (int) (Math.random() * 10);
+		List<TypePiece> liste= new ArrayList<TypePiece>();
+		for (TypePiece piece : TypePiece.values()) {
+			liste.add(piece);
+		}
+		while(nbPieces > 0) {
+			int r = (int) (Math.random() * liste.size());
+			new Piece(liste.get(r), pieces);
+			nbPieces--;
+		}
 	}
 
 	// GETTERS ET SETTERS

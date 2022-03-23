@@ -11,15 +11,10 @@ public class Meuble {
 	private int position;
 	private char charactere;
 	/**
-	 * @param nom
-	 * @param couleur
-	 * @param forme
-	 * @param taille
-	 * @param position
-	 * @param charactere
+	 * @param meuble
+	 * @param meubles
 	 *
 	 * CONSTRUCTEUR
-	 * 
 	 */
 	public Meuble(TypeMeuble meuble, List<Meuble> meubles) {
 		this.nom = meuble.getNom();

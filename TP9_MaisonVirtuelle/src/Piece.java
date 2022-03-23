@@ -10,15 +10,12 @@ public class Piece {
 	private int taille;
 	private double surface;
 	private String couleur;
-	private int position;
-	private String type;
-	public List<Meuble> meubles = new ArrayList<Meuble>();
+	private int position; // position dans la maison
+	private String type; // nom de la piece
+	public List<Meuble> meubles = new ArrayList<Meuble>(); // Liste des meubles present dans la piece
 	/**
-	 * @param taille
-	 * @param surface
-	 * @param couleur
-	 * @param position
 	 * @param typePiece
+	 * @param pieces
 	 * 
 	 * CONSTRUCTEUR
 	 */
@@ -40,22 +37,30 @@ public class Piece {
 		}
 	}
 	/**
-	 * @return
+	 * @return int Nombre de meuble possédé par la piece
 	 * 
-	 * afficher en console chaque meuble possédé par la pièce et retourne la taille total de meuble
+	 * afficher en console chaque meuble possédé par la pièce
 	 */
 	protected int afficherMeubles() {
 		for (Meuble meuble : meubles) {
-			System.out.printf("%s \n", meuble);
+			System.out.printf("%s\n", meuble.getNom());
+			System.out.printf("Couleur  : %s\n", meuble.getCouleur());
+			System.out.printf("Forme : %s\n", meuble.getForme() == null? meuble.getForme() : "Aucune");
+			System.out.printf("Taille  : %s\n", meuble.getTaille());
+			System.out.printf("Position : %s\n", meuble.getPosition());
+			System.out.printf("Representation : %s\n", meuble.getCharactere());
+			System.out.printf("%s\n", "--------------------");
+
 		}
 		return meubles.size();
 	}
 	
 	/**
-	 * @return
+	 * @return int Nombre de meuble possédé par la piece
 	 * 
-	 * afficher en console une grille par 4 colonnes représentant la pièce
-	 * et chacun de ces meubles est symbolisé par son charactère. 
+	 * afficher en console une grille sur 4 colonnes représentant la pièce
+	 * où chacun de ces meubles est symbolisé par son charactère. Aucun espace pour circuler
+	 * n'est représenté ce qui donne à la piece un aspect tres compact !!
 	 */
 	protected int afficherGrille() {
 		int surfaceCarre = this.getDimensions();
@@ -98,11 +103,9 @@ public class Piece {
 	}	
 	
 	/**
-	 * @return
+	 * @return int Nombre total de meuble (+ 4 Si c'est un multiple de 4) (Sinon on ajout la difference pour en faire un multiple de 4)
 	 * 
-	 * Additionne la taille total de tout les meubles de la piece et ajoute 4 si c'est déjà un multiple de 4 ou bien
-	 * la différence pour arrivé à un multiple de 4 avant de retourné ce resultat. Correspond à l'espace suffisant pour stocker
-	 * tout les meubles dans un espace carré
+	 * Calcule la dimension total de la piece, qui doit etre assez grande pour accueillir tous les meubles
 	 */
 	protected int getDimensions() {
 		int surfaceTotal = 0;

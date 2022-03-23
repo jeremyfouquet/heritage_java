@@ -4,97 +4,24 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * @author webdevelopment
+ * @author jeremy fouquet
  *
  */
 public class Main {
 
 	public static void main(String[] args) {
-		// On visite la maison
-		visiteMaison("visiteMaison");
-		// TESTS
-		testAfficherMeubles("afficherMeubles");
-		testAfficherGrille("afficherGrille");
-		testAfficherPieces("afficherPieces");
-		testSurfaceTotal("surfaceTotal");
-		testStockPieces("stockPieces");
+		visiteMaison();
 	}
-	
-	public static void testAfficherMeubles(String testMethodName) {
-		Maison maison = new Maison();
-		String piece = maison.getPieces().get(0).getType();
-		int nbMeubles = 8;
-		System.out.printf("TEST : %s \n%s affiche la liste de ses %d meubles : \n",testMethodName, piece, nbMeubles);
-		int liste = maison.getPieces().get(0).afficherMeubles();
-		boolean  conditionTestSuccess = nbMeubles == liste;
-		System.out.printf("SUCCESS : %b \n", conditionTestSuccess);
-		System.out.println();
-	}
-	
-	public static void testAfficherGrille(String testMethodName) {
-		Maison maison = new Maison();
-		String piece = maison.getPieces().get(0).getType();
-		int nbMeubles = 8;
-		System.out.printf("TEST : %s \naffiche la grille représentant %s \n",testMethodName, piece);
-		int liste = maison.getPieces().get(0).afficherGrille();
-		boolean  conditionTestSuccess = nbMeubles == liste;
-		System.out.printf("SUCCESS : %b \n", conditionTestSuccess);
-		System.out.println();
-	}
-	
-	public static void testAfficherPieces(String testMethodName) {
-		Maison maison = new Maison();
-		int nbPieces = 5;
-		System.out.printf("TEST : %s \n%s affiche la liste de ses %d pieces : \n",testMethodName, maison.getClass().getName(), nbPieces);
-		int liste = maison.afficherPieces();
-		boolean  conditionTestSuccess = nbPieces == liste;
-		System.out.printf("SUCCESS : %b \n", conditionTestSuccess);
-		System.out.println();
-	}
-	
-	public static void testSurfaceTotal(String testMethodName) {
-		Maison maison = new Maison();
-		double surfaceTotal = 0;
-		for (Piece piece : maison.getPieces()) {
-			surfaceTotal += piece.getDimensions()*5;
-		}
-		System.out.printf("TEST : %s \n%s affiche sa surface total : %.1f\n",testMethodName, maison.getClass().getName(), surfaceTotal);
-		boolean conditionTestSuccess = surfaceTotal == maison.surfaceTotal();
-		System.out.printf("SUCCESS : %b \n", conditionTestSuccess);
-		System.out.println();
-	}
-	
-	public static void testStockPieces(String testMethodName) {
-		Maison maison = new Maison();
-		List<Meuble> meubles = maison.getPieces().get(0).getMeuble();
-		Porte porte = null;
-		while (porte == null) {
-			for (Meuble meuble : meubles) {
-				if(meuble.getNom().equals(TypeMeuble.porte.getNom())) {
-					porte = (Porte) meuble;
-				}
-			}
-		}
-		int nbPiece = porte.getConnecte().size();
-		System.out.printf("TEST : %s\n%s : %s stock les %d pieces qu'elle connecte \n",testMethodName, porte.getNom(), porte, nbPiece);
-		boolean conditionTestSuccess = porte.getConnecte().size() == porte.stockPieces().size();
-		System.out.printf("SUCCESS : %b \n", conditionTestSuccess);
-		System.out.println();
-	}
-	
-	
+
 	/**
-	 * @param methodName
-	 * 
-	 *  Une personne peut donc visiter la maison, en se déplaçant dans les
-	 *	différentes pièces en choisissant à l'aide d'un menu la porte à ouvrir,
-	 *  afficher la liste des objets présents dans la pièce, ou les
-	 *	caractéristiques de celles-ci.
+	 *  Tant que l'utilisateur ne choisi pas STOP via le SCANNER il peut soit :
+	 *  Ouvrir une porte pour changer de piece 
+	 *  Voir la liste des meubles present dans la piece
+	 *  Voir les caracteristique de la piece
 	 */
-	public static void visiteMaison(String methodName) {
+	public static void visiteMaison() {
 		Scanner sc = new Scanner(System.in);
-		System.out.printf("METHODE : %s\n", methodName);
-		Maison maison = new Maison();
+		Maison maison = new Maison(true);
 		int precedentePosition = -1;
 		int position = 1;
 		String choix = "";
@@ -132,7 +59,7 @@ public class Main {
 					System.out.printf("Nom : %s\n", visite.getType());
 					System.out.printf("Couleur : %s\n", visite.getCouleur());
 					System.out.printf("Taille : %s\n", visite.getTaille());
-					System.out.printf("Surface : %s\n", visite.getSurface());
+					System.out.printf("Surface : %s m²\n", visite.getSurface());
 					break;
 				default:
 					break;
@@ -142,35 +69,51 @@ public class Main {
 		
 	}
 
-	// CHOIX MENU
+	/**
+	 * @param sc Scanner permettant d'interragir avec l'utilisateur
+	 * @param menu liste des choix de réponse proposé
+	 * @return String reponse de l'utilisateur
+	 * 
+	 * Propose à l'utilisateur de faire un choix parmis une liste de String
+	 */
 	public static String selectChoix(Scanner sc, List<String> menu) {
 		String choix = "";
-		System.out.printf("Vous avez le choix parmis les %s actions suivantes : \n", menu.size());
+		System.out.printf("\nVous avez le choix parmis les %s actions suivantes :\n", menu.size());
+		for (String c : menu) {
+			System.out.printf("%s\n", c);
+		}
 		while (!menu.contains(choix)) {
-			for (String c : menu) {
-				System.out.printf("%s\n", c);
-			}
-			System.out.printf("RECOPIEZ votre choix ci dessous, puis click ENTREZ: \n");
+			System.out.printf("\nRECOPIEZ votre choix ci dessous, puis click ENTREZ: \n");
 			choix = sc.nextLine();
 		}
 		return choix;
 	}
-	// CHOIX PORTE
+
+	/**
+	 * @param sc Scanner permettant d'interragir avec l'utilisateur
+	 * @param portes Liste des portes accessibles
+	 * @return visite Piece actuelle
+	 * 
+	 * Propose à l'utilisateur choisir parmis une ou deux porte menant à une autre piece
+	 */
 	public static int selectPosition(Scanner sc, List<Porte> portes, Piece visite) {
 		List<Integer> positionAccepte = new ArrayList<Integer>();
-		System.out.printf("Pour OUVRIR une porte vers \n");
 		int position = -1;
 		while (!positionAccepte.contains(position)) {
+			System.out.printf("\nPour OUVRIR une porte vers \n");
 			for (Porte porte : portes) {
 				for (Piece piece : porte.getConnecte()) {
 					if(piece.getType() != visite.getType()) {
 						positionAccepte.add(piece.getPosition());
-						System.out.printf("%s => TAPEZ %d \n", piece.getType(), piece.getPosition());
+						System.out.printf("%s => RECOPIEZ %d, puis click ENTREZ\n", piece.getType(), piece.getPosition());
 					}
 				}
 			}
-			position = sc.nextInt();
-			sc.nextLine();
+			try {
+				position = Integer.parseInt(sc.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.printf("%s\n", "Seul les valeurs numeriques sont autorisés");
+			}
 		}
 		return position;
 	}

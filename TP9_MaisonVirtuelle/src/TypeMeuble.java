@@ -1,5 +1,8 @@
+/**
+ * @author jeremy fouquet
+ *
+ */
 public enum TypeMeuble {  
-//	http://blog.paumard.org/cours/java/chap04-structure-classe-enumeration.html
 	table("Une table", "rouge", "carré", 4, "table".charAt(0)),
 	canape("Une canapé", "noir", "rectangle", 2, "canapé".charAt(4)),
 	television("Une télévision", "noir", "", 1, "télévision".charAt(4)),
@@ -27,6 +30,8 @@ public enum TypeMeuble {
          this.charactere = charactere;  
 
     }  
+     
+     // GETTERS ET SETTERS
       
      public String getNom() {  
          return  this.nom;

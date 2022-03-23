@@ -20,17 +20,17 @@ public class Piece {
 	 * CONSTRUCTEUR
 	 */
 	public Piece(TypePiece typePiece, List<Piece> pieces) {
-		this.setCouleur(typePiece.getCouleur());
-		this.setPosition(pieces.size()+1);		
-		this.setType(typePiece.getNom());
+		this.couleur = typePiece.getCouleur();
+		this.position = pieces.size()+1;		
+		this.type = typePiece.getNom();
 		for (TypeMeuble typeMeuble : typePiece.getTypeMeubles()) {
 			new Meuble(typeMeuble, meubles);
 		}
-		this.setTaille(this.getDimensions());
-		this.setSurface(this.getTaille()*5);
+		this.taille = this.getDimensions();
+		this.surface = this.getTaille()*5;
 		pieces.add(this);
-		if(this.getPosition() > 1) {
-			Piece pieceVoisine = pieces.get(this.getPosition()-2);
+		if(this.position > 1) {
+			Piece pieceVoisine = pieces.get(this.position - 2);
 			List<Piece> connecte = Arrays.asList(pieceVoisine, this);
 			new Porte(TypeMeuble.porte, pieceVoisine.meubles, connecte);
 			new Porte(TypeMeuble.porte, meubles, connecte);

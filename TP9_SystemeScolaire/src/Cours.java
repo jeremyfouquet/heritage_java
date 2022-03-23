@@ -22,12 +22,12 @@ public class Cours {
 	 * Constructeur
 	 */
 	public Cours(String lieu, String horaire, int duree, String theme, int coefficient) {
-		this.setLieu(lieu);
-		this.setHoraire(horaire);
-		this.setDuree(duree);
-		this.setTheme(theme);
-		this.setCoefficient(coefficient);
-		this.setType(TypeCours.CoursMagistral);
+		this.Lieu = lieu;
+		this.horaire = horaire;
+		this.duree = duree;
+		this.theme = theme;
+		this.coefficient = coefficient;
+		this.type = TypeCours.CoursMagistral;
 	}
 	
 	@Override

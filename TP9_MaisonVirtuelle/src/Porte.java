@@ -28,7 +28,7 @@ public class Porte extends Meuble {
 	 */
 	protected List<Piece> stockPieces() {
 		List<Piece> stock = new ArrayList<Piece>(2);
-		for (Piece piece : this.getConnecte()) {
+		for (Piece piece : this.connecte) {
 			stock.add(piece);
 		}
 		return stock;

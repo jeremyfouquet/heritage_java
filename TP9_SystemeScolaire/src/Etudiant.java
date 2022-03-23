@@ -22,9 +22,9 @@ public class Etudiant implements Personne {
 	 */
 	public Etudiant(int identifiant, String nom, String prenom) {
 		super();
-		this.setIdentifiant("etudiant"+identifiant);
-		this.setNom(nom);
-		this.setPrenom(prenom);
+		this.identifiant = "etudiant"+identifiant;
+		this.Nom = nom;
+		this.prenom = prenom;
 		listPersonne.add(this);
 	}
 

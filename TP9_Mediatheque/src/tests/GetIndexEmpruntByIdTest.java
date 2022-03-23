@@ -29,7 +29,10 @@ public class GetIndexEmpruntByIdTest extends TestCase {
     
     protected void tearDown() throws Exception {
         super.tearDown();
-        membre.setEmprunt(new ArrayList<Document>());
+        membre = null;
+        document = null;
+        Mediatheque.mediatheque = new ArrayList<Document>();
+        Mediatheque.membres = new ArrayList<Membre>();
     }
     
     public void testGetIndexEmpruntById1() throws Exception {

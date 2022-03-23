@@ -1,8 +1,10 @@
 package tests;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import junit.framework.TestCase;
+import mediatheque.Document;
 import mediatheque.Mediatheque;
 
 public class DocumentEmpruntableTest extends TestCase {
@@ -19,6 +21,7 @@ public class DocumentEmpruntableTest extends TestCase {
     }
     protected void tearDown() throws Exception {
         super.tearDown();
+        Mediatheque.mediatheque = new ArrayList<Document>();
     }
     
     public void testDocumentEmpruntable1() throws Exception {

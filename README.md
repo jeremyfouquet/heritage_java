@@ -137,25 +137,34 @@ Seuls les membres du personnel ont le droit d'ajouter de nouveaux documents ou d
 **Lisibilité du code** : 1/1
 
 **Commentaire** : 1/1
+* J'ai essayé d'uniformiser les commentaires mais ils restent encore un peu différent surtout d'un exercice à l'autre ce que je corrigerai au prochain tp. J'ai quand même supprimé tous les commentaires vide.
 
 **Modélisation** : 2/2
+* J'ai pris en compte tes remarques pour les flèches, les attributs dans les classes ne sont représenté que par les flèches et j'utilise son nom plutot que son type
 
 **Pertinence des tests** : 1/2
-* Je ne suis pas très fiere de mes tests notamment ceux pour tester les boucles dans lequel le scanner reste actif tant que != "RETOUR"
-* Il manque encore beaucoup de test pour vraiment dire que je les aient tous fait !
+* Je ne suis pas très fiere de mes tests notamment ceux pour tester les boucles dans lequels le Scanner reste actif tant que != "RETOUR"
+* J'ai essayé d'utilisé des exceptions dans les tests mais là encore c'est pas jolie jolie, comme tu peut le constater à des moment j'utilise fail() et d'autre MonException() ... bref c'est pas claire et je vais approfondir mes connaissance la dessus.
+* Il manque encore beaucoup de test pour vraiment dire que je couvre tout le projet
+* Ah oui petite question qui me vient j'ai modifié les portées de mes methodes de protected à public (car les tests ne sont pas dans le même package et sinon j'avai une erreur de visibilité : The method ... from the type ... is not visible) est ce que c'est normal de devoir modifier la portée juste pour des tests ou bien c'est que de base je n'est pas bien compris le sens des portées ??
 
-**Ajout perso** : 1/2 
-* J'ai ajouté pas mal d'exeption comme demandé dans le tp précedent
-* J'ai ajouté quelque generateur de donné aleatoire en plus de la question bonus de l'exercice 2
+**Ajout perso** : 2/2 
+* J'ai ajouté des exceptions comme demandé dans le tp précedent
+* J'ai ajouté quelque generateurs de donnés aleatoires en plus de la question bonus de l'exercice 2
 
 **Avancement du TP** : 4/4
+* Tp terminé
 
-**Bonne implémentation des concept vu en cours** : 4/6
-* Je ne maitrise pas encore tres bien les enums et ni quand il peuvent se substituer à l'utilisation d'une autre type de classe.
+**Bonne implémentation des concept vu en cours** : 3.5/6
+* Je ne maitrise pas encore tres bien les enums. Exemple pour la partie choix d'action de la mediatheque je voulais utilisé le string associé à l'enum Choix pour ensuite faire un switch case, mais impossible car le case n'accepte que des constante, donc je me retrouve avec de if else (-1 en mauvaise pratique :( )
+* l'heritage est clairement pas encore bien maitrisé car j'utilise encore beaucoup trop de conditions et de boucle au lieu de laissé faire JAVA ...
+* Je ne sais pas pourquoi mais la porte dans la maison virtuelle ne me plais pas du tout, il y à d'abord un enum d'un côté puis un heritage de l'autre je trouve ça alambiqué
 
 **Bonne pratique** : 1/2 
-* beaucoup de boucle imbriqué notament avec les exceptions et les try ... catch que je ne maitrise pas du tout
+* beaucoup de boucle imbriqués notament avec les exceptions et les try ... catch que je ne maitrise pas du tout
 
-**Mauvais pratique** : 0/-2
+**Mauvais pratique** : -1/-2
+* if else au lieu de switch case
+* else vide
 
-TOTAL : 15
+TOTAL : 14.5

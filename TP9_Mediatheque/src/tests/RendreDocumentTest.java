@@ -30,7 +30,10 @@ public class RendreDocumentTest extends TestCase {
 
     protected void tearDown() throws Exception {
         super.tearDown();
-        membre.setEmprunt(new ArrayList<Document>());
+        membre = null;
+        emprunt = null;
+        Mediatheque.mediatheque = new ArrayList<Document>();
+        Mediatheque.membres = new ArrayList<Membre>();
     }
     
     public void testRendreDocument1() throws Exception {

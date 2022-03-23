@@ -22,6 +22,7 @@ public class GetMembreByIdTest extends TestCase {
     }
     protected void tearDown() throws Exception {
         super.tearDown();
+        Mediatheque.membres = new ArrayList<Membre>();
     }
     
     public void testGetMembreById1() throws Exception {

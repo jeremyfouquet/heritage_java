@@ -31,6 +31,9 @@ public class DocumentARenoverTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         membre = null;
+        document = null;
+        Mediatheque.mediatheque = new ArrayList<Document>();
+        Mediatheque.membres = new ArrayList<Membre>();
     }
     
     public void testDocumentARenover1() throws Exception {

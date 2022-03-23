@@ -1,5 +1,6 @@
 package tests;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import junit.framework.TestCase;
@@ -25,6 +26,8 @@ public class DocumentPresentTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         membre = null;
+        Mediatheque.mediatheque = new ArrayList<Document>();
+        Mediatheque.membres = new ArrayList<Membre>();
     }
     
     public void testDocumentPresent1() throws Exception {

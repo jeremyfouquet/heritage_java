@@ -22,6 +22,7 @@ public class GetDocumentByIdTest extends TestCase {
     }
     protected void tearDown() throws Exception {
         super.tearDown();
+        Mediatheque.mediatheque = new ArrayList<Document>();
     }
     
     public void testGetDocumentById1() throws Exception {

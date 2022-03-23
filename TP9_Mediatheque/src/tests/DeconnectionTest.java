@@ -1,5 +1,6 @@
 package tests;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import junit.framework.TestCase;
@@ -23,6 +24,7 @@ public class DeconnectionTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         membre = null;
+        Mediatheque.membres = new ArrayList<Membre>();
     }
     
     public void testDeconnection() throws Exception {

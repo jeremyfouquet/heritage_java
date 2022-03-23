@@ -1,9 +1,11 @@
 package tests;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import junit.framework.TestCase;
 import mediatheque.Mediatheque;
+import mediatheque.Membre;
 
 public class CreateMembresTest extends TestCase {
 	private Mediatheque mediatheque;
@@ -14,6 +16,7 @@ public class CreateMembresTest extends TestCase {
     
     protected void setUp() throws Exception {
         super.setUp();
+        Mediatheque.membres = new ArrayList<Membre>();
 		mediatheque = new Mediatheque(new Scanner(System.in));
     }
     protected void tearDown() throws Exception {

@@ -1,8 +1,10 @@
 package tests;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import junit.framework.TestCase;
+import mediatheque.Document;
 import mediatheque.Mediatheque;
 
 public class CreateDocumentsTest extends TestCase {
@@ -14,6 +16,7 @@ public class CreateDocumentsTest extends TestCase {
     
     protected void setUp() throws Exception {
         super.setUp();
+        Mediatheque.mediatheque = new ArrayList<Document>();
 		mediatheque = new Mediatheque(new Scanner(System.in));
     }
     protected void tearDown() throws Exception {

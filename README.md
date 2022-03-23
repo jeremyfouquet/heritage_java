@@ -131,3 +131,31 @@ Seuls les membres du personnel ont le droit d'ajouter de nouveaux documents ou d
 2 Coder les différentes fonctionnalités en utilisant de la POO. Faites attention aux cas d'erreurs potentielles.
 
 3 Dans votre main, réaliser un jeu de test permettant de valider vos différentes fonctionnalités. Pour rappel, un jeu de test ne doit pas permettre à l'utilisateur de tester votre programme mais plutôt montrer les différents cas que vous avez vous même testé. Pour réaliser cela, vous êtes libre d'utiliser une technologie comme JUNIT ou de les faire à la main dans votre main. Chaque test doit avoir un commentaire précisant le cas à tester (cas normal ou particulier), exécuter les méthodes nécessaires et afficher les résultats obtenus en console.
+
+# Auto-Évaluation :
+
+**Lisibilité du code** : 1/1
+
+**Commentaire** : 1/1
+
+**Modélisation** : 2/2
+
+**Pertinence des tests** : 1/2
+* Je ne suis pas très fiere de mes tests notamment ceux pour tester les boucles dans lequel le scanner reste actif tant que != "RETOUR"
+* Il manque encore beaucoup de test pour vraiment dire que je les aient tous fait !
+
+**Ajout perso** : 1/2 
+* J'ai ajouté pas mal d'exeption comme demandé dans le tp précedent
+* J'ai ajouté quelque generateur de donné aleatoire en plus de la question bonus de l'exercice 2
+
+**Avancement du TP** : 4/4
+
+**Bonne implémentation des concept vu en cours** : 4/6
+* Je ne maitrise pas encore tres bien les enums et ni quand il peuvent se substituer à l'utilisation d'une autre type de classe.
+
+**Bonne pratique** : 1/2 
+* beaucoup de boucle imbriqué notament avec les exceptions et les try ... catch que je ne maitrise pas du tout
+
+**Mauvais pratique** : 0/-2
+
+TOTAL : 15
